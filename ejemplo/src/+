@@ -1,0 +1,15 @@
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+	<form className="fromulario">
+	<p><input type="text" name="msg" placeholder="Escribe"/></p>
+	<p><button>habla</button></p>
+	</form>
+    </div>
+  );
+}
+
+export default App;
