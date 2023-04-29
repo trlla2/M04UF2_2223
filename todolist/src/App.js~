@@ -54,6 +54,11 @@ class  App extends React.Component {
 		<p>you have <strong style={{color:'#B22222'}}>{this.state.tasklist.length}</strong> pending tasks</p>
 		</Paper>
 		</Box>
+		<footer 
+		sx={{
+			background:'linear-gradient(to right bottom, #ffffff,#000000)'
+		}}
+		></footer>
  	 );
 	}
 }

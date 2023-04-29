@@ -20,7 +20,11 @@ class TaskFrom extends React.Component{
 					});
 
 				}} placeholder="Add your new todo"/>
-         		<Button variant="contained" type="button" onClick={() =>{
+         		<Button variant="contained" type="button" 
+				sx={{
+				color:'white'
+				}}
+				onClick={() =>{
 					if (this.state.task.trim()=== ""){
 						this.setState({
 							task: ""
