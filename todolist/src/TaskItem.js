@@ -33,10 +33,13 @@ class TaskItem extends React.Component{
 	}
 
 	render(){
+	const today = new Date();
+	const time = today.getHours() + ":" + today.getMinutes();
 		return(
 			
 			<ListItem>
 				<ListItemText primary={this.props.text}/>
+				<ListItemText primary={time}/>
 				<Tooltip onClick={this.openDialog} title="Borrar">
 					<IconButton>
 						<DeleteIcon />

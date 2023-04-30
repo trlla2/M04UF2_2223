@@ -47,8 +47,7 @@ class  App extends React.Component {
 	 		sx={{
 				padding:'15px'
 			}}>
-		<Title text="TODO App" id="title" />
-		
+		<Title text="TODO App" id="title"/>	
 		<TaskFrom onAddTask={this.addTask} />
 		<TaskList list={this.state.tasklist} onRemoveTask={this.removeTask}/>	
 		<p>you have <strong style={{color:'#B22222'}}>{this.state.tasklist.length}</strong> pending tasks</p>
