@@ -1,16 +1,14 @@
 const http = require('http');
 const { MongoClient } = require('mongodb');
-const url = 'mongodb://127.0.0.1:27017';
-const client = new MongoClient(url);
-const dbName = 'todolist';
+const mongoClient = new MongoClient('mongodb://127.0.0.1:27017');
 let db;
 let collection;
 
 async function dbConnect() {
-  await client.connect();
+  await mongoClient.connect();
     
   console.log('Connected successfully to server');
-  db = client.db(dbName);
+  db = mongoClient.db('todolist');
   collection = db.collection("list");
 
   return 'Connected to MongoDB database';
@@ -20,17 +18,20 @@ dbConnect()
 	.then(console.log)
 	.catch(console.error);
 
-http.createServer(function (request, response) {
+http.createServer(function (req, res) {
 
-	response.setHeader("Access-Control-Allow-Origin", "*");
-	response.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
-	response.setHeader("Access-Control-Allow-Max-Age", "2592000");
+	//res.writeHead(200, {
 
-	if (request.method == "POST") {
+	//});
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
+	res.setHeader("Access-Control-Allow-Max-Age", "2592000");
+
+	if (req.method == "POST") {
 		let data = "";
 
-		request.on('data', dataChunk => data += dataChunk);
-		request.on('end', () => {
+		req.on('data', dataChunk => data += dataChunk);
+		req.on('end', () => {
 			data = JSON.parse(data);
 			
 			if (data.remove == "false") {
@@ -42,7 +43,7 @@ http.createServer(function (request, response) {
 	
 				collection.find({"task": data.task}).limit(1).toArray()
 					.then(task => {
-						response.end(JSON.stringify(task));
+						res.end(JSON.stringify(task));
 					});
 			}
 			else {
@@ -55,6 +56,6 @@ http.createServer(function (request, response) {
 	collection.find().toArray()
 		.then(items => {
 			let itemsJson = JSON.stringify(items);
-		 	response.end(itemsJson);
+		 	res.end(itemsJson);
 		 });
 }).listen(8080);
