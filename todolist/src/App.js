@@ -32,7 +32,7 @@ class  App extends React.Component {
 		this.state.tasklist = [];
 		this.state.tasklistTime = [];
 	
-		if(list.lenght <= 0){
+		if(list.lenght < 0){
 			return;
 		}
 
@@ -100,7 +100,7 @@ class  App extends React.Component {
 			}}>
 		<Title text="TODO App" id="title"/>	
 		<TaskFrom onAddTask={this.addTask} />
-		<TaskList list={this.state.tasklist} onRemoveTask={this.removeTask}/>	
+		<TaskList list={this.state.tasklist} listTime={this.state.tasksTime} onRemoveTask={this.removeTask}/>	
 		<p>you have <strong style={{color:'#B22222'}}>{this.state.tasklist.length}</strong> pending tasks</p>
 		</Paper>
 		</Box>
