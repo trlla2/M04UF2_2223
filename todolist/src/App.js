@@ -13,10 +13,51 @@ class  App extends React.Component {
 		super(props);
 		
 		this.state = {
-			tasklist: []
+			tasklist: [],
+			tasklistIds: [],
+			tasklistTime: []
 		};
 	}
+	componentDidMount (){
+		this.fetchData();
+	}
+	fetchData = () => {
+		fetch('http://192.168.1.117:8080', {method: "GET"})
+			.then(response => response.json())
+		.then(data => this.createTasklist(data));
+	}
+
+	createTasklist = (list) => {
+		this.state.tasklistIds = [];
+		this.state.tasklist = [];
+		this.state.tasklistTime = [];
+	
+		if(list.lenght <= 0){
+			return;
+		}
+
+		for(let i = 0; i < list.length; i++) {
+			this.state.tasklistIds.unshift(list[i]._id);
+			this.state.tasklist.unshift(list[i].tasks);
+			this.state.tasklistTime.unshift(list[i].time);
+		}
+
+		this.setState ({
+			tasklistIds: this.state.tasklistIds,
+			tasklist: this.state.tasklist,
+			tasklistTime: this.state.tasklistTime
+		});
+	}
+
   addTask = (task) =>{
+		fetch('http://192.168.1.117:8080',{
+				method: "POST",
+				body: '{"task":"' + task + '", "remove": "false"}'
+			})
+				.then(response => response.json())
+				.then(data => this.fetchData());
+
+/*
 		console.log(task);
 
 		this.state.tasklist.unshift(task);
@@ -24,12 +65,22 @@ class  App extends React.Component {
 		this.setState({
 			tasklist: this.state.tasklist
 		});
+*/
   }
   removeTask = (task_num) =>{
+  	fetch('http://192.168.1.117:8080',{
+		methot: "POST",
+		body: '{"task":"' + task_num + '", "remove": "true"}'
+
+	})
+		.then(response => response.json)
+		.then(data => this.fetchData());
+  /*
 	this.state.tasklist.splice(task_num,1);
 	this.setState({
 		tasklist: this.state.tasklist
 	});
+	*/
   }
 
   render(){

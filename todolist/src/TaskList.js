@@ -19,8 +19,11 @@ class TaskList extends React.Component{
 		counter++;
 			return(
 				<TaskItem text={task} num_task={counter} onRemoveTask={this.props.onRemoveTask} />
+			
 			);
 		});
+		
+		
 		return(
 			<List>
 			{tasks}
