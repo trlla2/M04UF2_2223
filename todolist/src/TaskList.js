@@ -11,18 +11,24 @@ class TaskList extends React.Component{
 	 		items: this.props.list
 		};
 	}
-
-	render(){
+	
+	itemList = () => {
 		console.log("render");
 		let counter =-1;
-		const tasks = this.state.items.map(task => {
+		const tasks = this.props.list.map(task => {
 		counter++;
 			return(
-				<TaskItem text={task} num_task={counter} time={this.props.listTime[counter]} onRemoveTask={this.props.onRemoveTask} />
+				<TaskItem text={task} time={this.props.listTime[counter]} onRemoveTask={this.props.onRemoveTask} />
 			
 			);
-		});
+		});	
+
+		return tasks;
+	}
+
+	render(){
 		
+		const tasks = this.itemList();
 		
 		return(
 			<List>
